@@ -1,8 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createServer } from 'miragejs'
 import { App } from './App';
 
-const root = document.getElementById('root')
+createServer({
+    routes() {
+        this.namespace = 'api'
 
-ReactDOM.render(<App />, root)
+        this.get('/transactions', () => {
+            return [
+                {
+                    id: 1,
+                    title: 'Transaction 1',
+                    amount: '400',
+                    type: 'deposit',
+                    category: 'Food',
+                    createdAt: new Date()
+                }
+            ]
+        })
+    }
+})
+
+ReactDOM.render(<App />, document.getElementById('root'))
 
